@@ -21,7 +21,7 @@ dotnet ef migrations add {{name}} -c AuthDbContext
 - install mysql (https://www.mysql.com/downloads/) or run it from docker. For ease of use you should also get workbanch, or some IDE to visual connect to MySQL server.
 
 ## Api testing
-You can have a visual representation of the api on the /swagger page, also the page that the app stats.
+You can have a visual representation of the api on the /swagger page, also the page that the app starts.
 
 ## On deploy 
 Please make sure you overwrite the following settings:
