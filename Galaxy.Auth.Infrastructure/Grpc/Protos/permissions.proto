@@ -1,0 +1,34 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Galaxy.Auth.Grpc";
+
+package Permissions;
+
+// The permissions service definition.
+service Permissions {
+  // Sends a permissions manipulation
+  rpc AddPermission (stream PermissionRequest) returns (PermissionReply);
+  rpc RemovePermission (stream PermissionRequest) returns (PermissionReply);
+  rpc GetPermissions (UserPermissionRequest) returns (stream UserPermissionReplay);
+}
+
+// The request message containing the user's name.
+message PermissionRequest {
+  int32 userId = 1;
+  int32 permission =2;
+}
+
+// The response message containing the greetings.
+message PermissionReply {
+  bool success = 1;
+}
+// the request for getting user's permissions
+message UserPermissionRequest{
+   int32 id =1;
+}
+
+// the result for permissions request
+message UserPermissionReplay{
+   int32 permission =1;
+}
+

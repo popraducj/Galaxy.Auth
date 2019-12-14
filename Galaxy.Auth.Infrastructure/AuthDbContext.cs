@@ -19,6 +19,8 @@ namespace Galaxy.Auth.Infrastructure
         public DbSet<Permission> Permissions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Permission>()
+                .HasKey(c => new {c.UserId, c.UserPermission});
             base.OnModelCreating(modelBuilder);
             
         }

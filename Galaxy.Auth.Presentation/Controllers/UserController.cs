@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Security;
 using System.Threading.Tasks;
 using Galaxy.Auth.Core.Interfaces;
+using Galaxy.Auth.Core.Interfaces.Services;
 using Galaxy.Auth.Core.Models;
 using Galaxy.Auth.Presentation.ViewModels;
 using Microsoft.AspNetCore.Identity;

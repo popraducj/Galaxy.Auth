@@ -1,24 +1,18 @@
-
 using System;
 using System.IO;
 using Galaxy.Auth.Core.Interfaces;
 using Galaxy.Auth.Core.Models.Settings;
 using Galaxy.Auth.Infrastructure;
+using Galaxy.Auth.Infrastructure.Grpc.Services;
 using Galaxy.Auth.Presentation.Ioc;
 using Galaxy.Auth.Presentation.Middleware;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
-using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
-using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Swashbuckle.AspNetCore.Swagger;
 
 namespace Galaxy.Auth.Presentation
 {
@@ -43,6 +37,8 @@ namespace Galaxy.Auth.Presentation
 
             services.AddRepositories();
             services.AddServices();
+
+            RegisterDatabase.InitializeDatabase(services);
             
             services.AddScoped<IEmailSender, EmailSender>();
             services.AddSwaggerGen(
@@ -63,7 +59,7 @@ namespace Galaxy.Auth.Presentation
                     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                     options.IncludeXmlComments(xmlPath);
                 });
-            
+            services.AddGrpc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,8 +79,10 @@ namespace Galaxy.Auth.Presentation
 
             app.UseAuthorization();
 
+            
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<PermissionsService>();
                 endpoints.MapControllers();
             });
         }

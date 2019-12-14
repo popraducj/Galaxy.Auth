@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Galaxy.Auth.Core.Helpers;
 using Galaxy.Auth.Core.Interfaces;
+using Galaxy.Auth.Core.Interfaces.Services;
 using Galaxy.Auth.Core.Models;
 using Galaxy.Auth.Core.Models.Settings;
 using Microsoft.AspNetCore.Identity;

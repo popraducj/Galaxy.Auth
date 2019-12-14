@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Galaxy.Auth.Core.Interfaces;
+using Galaxy.Auth.Core.Interfaces.Services;
 using Galaxy.Auth.Presentation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

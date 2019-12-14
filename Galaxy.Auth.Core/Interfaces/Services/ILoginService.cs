@@ -2,7 +2,7 @@
 using Galaxy.Auth.Core.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Galaxy.Auth.Core.Interfaces
+namespace Galaxy.Auth.Core.Interfaces.Services
 {
     public interface ILoginService
     {

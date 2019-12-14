@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Galaxy.Auth.Core.Enums;
 using Galaxy.Auth.Core.Models;
 using Galaxy.Auth.Core.UserManagerExtensions;
 using Galaxy.Auth.Infrastructure;
@@ -39,5 +42,67 @@ namespace Galaxy.Auth.Presentation.Ioc
 
             return services;
         }
+
+        public static void InitializeDatabase(IServiceCollection services)
+        {
+            var builder = services.BuildServiceProvider();
+            var authDbContext = builder.GetService<AuthDbContext>();
+
+            AddAdminUserAsync(builder).Wait();
+            UpdateAdminPermissions(authDbContext);
+        }
+
+        #region Private methods
+
+        private static async Task AddAdminUserAsync(IServiceProvider serviceProvider)
+        {
+            var userManagement = serviceProvider.GetRequiredService<UserManager<User>>();
+
+            if (userManagement.Users.Count(p => p.Id == 1) > 0)
+            {
+                Console.WriteLine("The user has been already created");
+                return;
+            }
+
+            const string email = "admin@galaxy.com";
+            var user = new User
+            {
+                Email = email,
+                EmailConfirmed = true,
+                Name = "Galaxy Admin",
+                UserName = Guid.NewGuid().ToString(),
+                Id = 1,
+                NormalizedEmail = email.ToUpper()
+            };
+
+            var createUserResult = await userManagement.CreateAsync(user, "someRandomSecurePassword123!");
+            if (!createUserResult.Succeeded)
+            {
+
+                Console.WriteLine("Could not create user. " +
+                                  $"Reason is: {string.Join(" ", createUserResult.Errors.Select(x => x.Description))} ");
+                throw new ArgumentException("Could not create User");
+            }
+        }
+
+        private static void UpdateAdminPermissions(AuthDbContext dbContext)
+        {
+            // making sure the admin have all permissions after each deploy
+            var dbContextPermissions = dbContext.Permissions.Where(x => x.UserId ==1).ToList();
+            
+            dbContext.Permissions.RemoveRange(dbContextPermissions);
+            dbContext.SaveChanges();
+            var allPermissions = Enum.GetValues(typeof(UserPermission)).Cast<UserPermission>()
+                .Select(p => new Permission
+                {
+                    UserPermission = p,
+                    UserId = 1
+                });
+
+            dbContext.Permissions.AddRange(allPermissions);
+            dbContext.SaveChanges();
+        }
+
+        #endregion
     }
 }

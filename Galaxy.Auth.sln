@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaxy.Auth.Core", "Galaxy.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaxy.Auth.Presentation", "Galaxy.Auth.Presentation\Galaxy.Auth.Presentation.csproj", "{59FE641E-FB63-4A80-B6FA-36EA92CC7CFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaxy.Auth.Grpc", "Galaxy.Auth.Grpc\Galaxy.Auth.Grpc.csproj", "{336C37D0-83B0-4877-B90A-864397B432EB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaxy.Auth.Core.Tests", "Galaxy.Auth.Core.Tests\Galaxy.Auth.Core.Tests.csproj", "{3802FB36-436E-4083-8AAB-A1EB35298D86}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaxy.Auth.Infrastructure.Tests", "Galaxy.Auth.Infrastructure.Tests\Galaxy.Auth.Infrastructure.Tests.csproj", "{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}"
@@ -64,18 +62,6 @@ Global
 		{59FE641E-FB63-4A80-B6FA-36EA92CC7CFC}.Release|x64.Build.0 = Release|Any CPU
 		{59FE641E-FB63-4A80-B6FA-36EA92CC7CFC}.Release|x86.ActiveCfg = Release|Any CPU
 		{59FE641E-FB63-4A80-B6FA-36EA92CC7CFC}.Release|x86.Build.0 = Release|Any CPU
-		{336C37D0-83B0-4877-B90A-864397B432EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{336C37D0-83B0-4877-B90A-864397B432EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{336C37D0-83B0-4877-B90A-864397B432EB}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{336C37D0-83B0-4877-B90A-864397B432EB}.Debug|x64.Build.0 = Debug|Any CPU
-		{336C37D0-83B0-4877-B90A-864397B432EB}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{336C37D0-83B0-4877-B90A-864397B432EB}.Debug|x86.Build.0 = Debug|Any CPU
-		{336C37D0-83B0-4877-B90A-864397B432EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{336C37D0-83B0-4877-B90A-864397B432EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{336C37D0-83B0-4877-B90A-864397B432EB}.Release|x64.ActiveCfg = Release|Any CPU
-		{336C37D0-83B0-4877-B90A-864397B432EB}.Release|x64.Build.0 = Release|Any CPU
-		{336C37D0-83B0-4877-B90A-864397B432EB}.Release|x86.ActiveCfg = Release|Any CPU
-		{336C37D0-83B0-4877-B90A-864397B432EB}.Release|x86.Build.0 = Release|Any CPU
 		{3802FB36-436E-4083-8AAB-A1EB35298D86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3802FB36-436E-4083-8AAB-A1EB35298D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3802FB36-436E-4083-8AAB-A1EB35298D86}.Debug|x64.ActiveCfg = Debug|Any CPU

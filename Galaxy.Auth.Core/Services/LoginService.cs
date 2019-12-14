@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Galaxy.Auth.Core.Interfaces;
+using Galaxy.Auth.Core.Interfaces.Services;
 using Galaxy.Auth.Core.Models;
 using Galaxy.Auth.Core.Models.Settings;
 using Microsoft.AspNetCore.Identity;
