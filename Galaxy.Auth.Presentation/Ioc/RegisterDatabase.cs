@@ -88,7 +88,7 @@ namespace Galaxy.Auth.Presentation.Ioc
         private static void UpdateAdminPermissions(AuthDbContext dbContext)
         {
             // making sure the admin have all permissions after each deploy
-            var dbContextPermissions = dbContext.Permissions.Where(x => x.UserId ==1).ToList();
+            var dbContextPermissions = dbContext.Permissions.Where(x => x.UserId == 1).ToList();
             
             dbContext.Permissions.RemoveRange(dbContextPermissions);
             dbContext.SaveChanges();

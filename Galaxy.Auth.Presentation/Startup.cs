@@ -83,6 +83,7 @@ namespace Galaxy.Auth.Presentation
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<PermissionsService>();
+                endpoints.MapGrpcService<UserService>();
                 endpoints.MapControllers();
             });
         }

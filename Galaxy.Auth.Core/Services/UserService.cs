@@ -127,7 +127,12 @@ namespace Galaxy.Auth.Core.Services
             _logger.LogCritical(
                 $"Change password failed for user: {id}. Errors: {JsonConvert.SerializeObject(result.Errors)}");
             return result.Errors;
+        }
 
+        public async Task<User> VerifyUserExists(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            return user;
         }
     }
 }

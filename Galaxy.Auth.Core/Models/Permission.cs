@@ -7,7 +7,7 @@ namespace Galaxy.Auth.Core.Models
     [Table("UserPermissions")]
     public class Permission
     {
-        public int UserId { get; set; }
+        public int  UserId { get; set; }
         public UserPermission UserPermission { get; set; }
         public User User { get; set; }
     }

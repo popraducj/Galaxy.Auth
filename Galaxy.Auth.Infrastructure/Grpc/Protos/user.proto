@@ -1,0 +1,19 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Galaxy.Auth.Grpc";
+
+package GrpcAuth;
+
+// The user service definition.
+service User {
+  rpc VerifyUser (UserRequest) returns (UserReply);
+}
+
+message UserRequest {
+  string username = 1;
+}
+
+message UserReply {
+  bool success = 1;
+  int32 id =2;
+}
