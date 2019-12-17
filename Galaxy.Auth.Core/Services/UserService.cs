@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Galaxy.Auth.Core.Helpers;
@@ -35,7 +34,7 @@ namespace Galaxy.Auth.Core.Services
             _signInManager = signInManager;
             _appSettings = appSettings.Value;
         }
-        public async Task<IEnumerable<IdentityError>> Register(RegisterModel model)
+        public async Task<IEnumerable<IdentityError>> RegisterAsync(RegisterModel model)
         {
             var user = new User
             {
@@ -59,13 +58,13 @@ namespace Galaxy.Auth.Core.Services
             
             await _invitationTokenRepository.AddAsync(token);
             _emailSender.SendEmail(model.Email, $"Hello {model.Name}, <br /> In order to activate your " +
-                                                $"account please click here: https://localhost:5001/user/activate?activationToken={_urlEncoder.Encode(token.Token)}" +
+                                                $"account please click here: https://localhost:5003/user/activate?activationToken={_urlEncoder.Encode(token.Token)}" +
                                                 $"<br/> <br/>Thank you, <br/>Galaxy team",
                 "Please activate your account");
-            return null;
+            return new List<IdentityError>();
         }
 
-        public async Task<IEnumerable<IdentityError>> Activate(string token)
+        public async Task<IEnumerable<IdentityError>> ActivateAsync(string token)
         {
             await Task.CompletedTask;
             string decodedToken;
@@ -96,40 +95,40 @@ namespace Galaxy.Auth.Core.Services
             }
 
             await _invitationTokenRepository.RemoveAsync(dbToken);
-            return null;
+            return new List<IdentityError>();
         }
 
-        public async Task<IEnumerable<IdentityError>> Update(string id, string name, string phone)
+        public async Task<IEnumerable<IdentityError>> UpdateAsync(string username, string name, string phone)
         {
-            var user = await _userManager.FindByNameAsync(id);
+            var user = await _userManager.FindByNameAsync(username);
             if (user == null) throw new UnauthorizedAccessException();
-            user.Name = name;
+            user.Name =  string.IsNullOrEmpty(name)? user.Name: name;
             user.PhoneNumber = phone;
 
             var result = await _userManager.UpdateAsync(user);
             
-            if (result.Succeeded) return null;
-            _logger.LogError($"Failed to update user:{id} with errors: {JsonConvert.SerializeObject(result.Errors)}");
+            if (result.Succeeded) return new List<IdentityError>();
+            _logger.LogError($"Failed to update user:{username} with errors: {JsonConvert.SerializeObject(result.Errors)}");
             return result.Errors;
         }
 
-        public async Task<IEnumerable<IdentityError>> ChangePassword(string id, string newPassword, string oldPassword)
+        public async Task<IEnumerable<IdentityError>> ChangePasswordAsync(string username, string newPassword, string oldPassword)
         {
-            var user = await _userManager.FindByNameAsync(id);
+            var user = await _userManager.FindByNameAsync(username);
             
             if (user == null || !user.EmailConfirmed) throw  new UnauthorizedAccessException();
-            var signIn = await _signInManager.CheckPasswordSignInAsync(user, oldPassword, false);
+            var signIn = await _signInManager.PasswordSignInAsync(username, oldPassword, false, false);
             if (!signIn.Succeeded)  throw  new UnauthorizedAccessException();
             
             var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
             var result = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
-            if (result.Succeeded) return null;
+            if (result.Succeeded) return new List<IdentityError>();
             _logger.LogCritical(
-                $"Change password failed for user: {id}. Errors: {JsonConvert.SerializeObject(result.Errors)}");
+                $"Change password failed for user: {username}. Errors: {JsonConvert.SerializeObject(result.Errors)}");
             return result.Errors;
         }
 
-        public async Task<User> VerifyUserExists(string username)
+        public async Task<User> VerifyUserExistsAsync(string username)
         {
             var user = await _userManager.FindByNameAsync(username);
             return user;

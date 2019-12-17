@@ -7,10 +7,10 @@ namespace Galaxy.Auth.Core.Interfaces.Services
 {
     public interface IUserService
     {
-        Task<IEnumerable<IdentityError>> Register(RegisterModel model);
-        Task<IEnumerable<IdentityError>> Activate(string token);
-        Task<IEnumerable<IdentityError>> Update(string id, string name, string phone);
-        Task<IEnumerable<IdentityError>> ChangePassword(string id, string newPassword, string oldPassword);
-        Task<User> VerifyUserExists(string username);
+        Task<IEnumerable<IdentityError>> RegisterAsync(RegisterModel model);
+        Task<IEnumerable<IdentityError>> ActivateAsync(string token);
+        Task<IEnumerable<IdentityError>> UpdateAsync(string username, string name, string phone);
+        Task<IEnumerable<IdentityError>> ChangePasswordAsync(string username, string newPassword, string oldPassword);
+        Task<User> VerifyUserExistsAsync(string username);
     }
 }

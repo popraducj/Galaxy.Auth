@@ -1,0 +1,61 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Galaxy.Auth.Grpc";
+
+package GrpcAuth;
+
+// The user service definition.
+service User {
+  rpc VerifyUser (UserRequest) returns (UserReply);
+  rpc Activate(TokenModel) returns (UserActionReplay);
+  rpc Register(RegisterRequest) returns (UserActionReplay);
+  rpc Update(UpdateRequest) returns (UserActionReplay);
+  rpc ChangePassword(ChangePasswordRequest) returns (UserActionReplay);
+  rpc Login(LoginRequest) returns (TokenModel);
+}
+
+message UserRequest {
+  string username = 1;
+}
+
+message UserReply {
+  bool success = 1;
+  int32 id = 2;
+}
+
+message ActionError{
+   string Code = 1;
+   string Description = 2;
+}
+
+message UserActionReplay{
+    bool success = 1;
+    repeated ActionError errors = 2;
+}
+
+message TokenModel{
+    string token = 1;
+}
+
+message RegisterRequest{
+    string email = 1;
+    string name = 2;
+    string password = 3;
+}
+
+message UpdateRequest{
+    string username = 1;
+    string name = 2;
+    string phone = 3;
+}
+
+message ChangePasswordRequest{
+    string username = 1;
+    string oldPassword = 2;
+    string newPassword = 3;
+}
+
+message LoginRequest{
+    string email = 1;
+    string password = 2;
+}

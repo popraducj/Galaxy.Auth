@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Galaxy.Auth.Presentation.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20191210212928_Initial")]
+    [Migration("20191217162231_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,18 +52,12 @@ namespace Galaxy.Auth.Presentation.Migrations
             modelBuilder.Entity("Galaxy.Auth.Core.Models.Permission", b =>
                 {
                     b.Property<int>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId1")
                         .HasColumnType("int");
 
                     b.Property<int>("UserPermission")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId");
-
-                    b.HasIndex("UserId1");
+                    b.HasKey("UserId", "UserPermission");
 
                     b.ToTable("UserPermissions");
                 });
@@ -208,7 +202,9 @@ namespace Galaxy.Auth.Presentation.Migrations
                 {
                     b.HasOne("Galaxy.Auth.Core.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>

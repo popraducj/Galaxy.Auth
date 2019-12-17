@@ -8,7 +8,7 @@ using Galaxy.Auth.Grpc;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
 
-namespace Galaxy.Auth.Infrastructure.Grpc.Services
+namespace Galaxy.Auth.Presentation.Services
 {
     public class PermissionsService : Permissions.PermissionsBase
     {

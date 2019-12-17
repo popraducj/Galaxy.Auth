@@ -31,7 +31,7 @@ namespace Galaxy.Auth.Core.Services
             _appSettings = appSettings.Value;
         }
 
-        public async Task<User> Login(string email, string password)
+        public async Task<User> LoginAsync(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null) throw new UnauthorizedAccessException();

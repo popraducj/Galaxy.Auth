@@ -6,7 +6,7 @@ namespace Galaxy.Auth.Core.Interfaces.Services
 {
     public interface ILoginService
     {
-        Task<User> Login(string email, string password);
+        Task<User> LoginAsync(string email, string password);
         string GenerateJwtToken(IdentityUser<int> user);
     }
 }

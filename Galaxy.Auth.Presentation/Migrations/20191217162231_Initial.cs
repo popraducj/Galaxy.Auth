@@ -125,20 +125,18 @@ namespace Galaxy.Auth.Presentation.Migrations
                 name: "UserPermissions",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserPermission = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<int>(nullable: true)
+                    UserId = table.Column<int>(nullable: false),
+                    UserPermission = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserPermissions", x => x.UserId);
+                    table.PrimaryKey("PK_UserPermissions", x => new { x.UserId, x.UserPermission });
                     table.ForeignKey(
-                        name: "FK_UserPermissions_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_UserPermissions_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -161,11 +159,6 @@ namespace Galaxy.Auth.Presentation.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserPermissions_UserId1",
-                table: "UserPermissions",
-                column: "UserId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
