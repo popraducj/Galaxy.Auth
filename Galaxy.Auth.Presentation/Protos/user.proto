@@ -6,7 +6,7 @@ package GrpcAuth;
 
 // The user service definition.
 service User {
-  rpc VerifyUser (UserRequest) returns (UserReply);
+  rpc GetUser (UserRequest) returns (UserReply);
   rpc Activate(TokenModel) returns (UserActionReplay);
   rpc Register(RegisterRequest) returns (UserActionReplay);
   rpc Update(UpdateRequest) returns (UserActionReplay);
@@ -19,7 +19,7 @@ message UserRequest {
 }
 
 message UserReply {
-  bool success = 1;
+  string name = 1;
   int32 id = 2;
 }
 

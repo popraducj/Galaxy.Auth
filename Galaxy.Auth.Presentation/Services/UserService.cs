@@ -21,13 +21,13 @@ namespace Galaxy.Auth.Presentation.Services
             _loginService = loginService;
         }
 
-        public override async Task<UserReply> VerifyUser(UserRequest user, ServerCallContext context)
+        public override async Task<UserReply> GetUser(UserRequest user, ServerCallContext context)
         {
             var dbUser = await _userService.VerifyUserExistsAsync(user.Username);
             return new UserReply
             {
-                Success = dbUser != null,
-                Id = dbUser?.Id ?? 0
+                Id = dbUser?.Id ?? 0,
+                Name = dbUser?.Name
             }; 
         }
 
