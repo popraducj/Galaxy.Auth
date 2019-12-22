@@ -4,6 +4,8 @@
     {
         AddCaptain,
         AddPlanet,
-        AddRobot
+        AddRobot,
+        AddShuttle,
+        AddTeam
     }
 }

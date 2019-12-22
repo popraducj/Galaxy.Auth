@@ -1,0 +1,20 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "Galaxy.Teams.Presentation";
+
+package CommonModels;
+
+
+message ActionError{
+   string Code = 1;
+   string Description = 2;
+}
+
+message ActionReplay{
+    bool success = 1;
+    repeated ActionError errors = 2;
+}
+
+message IdRequest{
+    string id = 1;
+}

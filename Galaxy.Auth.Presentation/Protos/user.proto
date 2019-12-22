@@ -3,14 +3,15 @@
 option csharp_namespace = "Galaxy.Auth.Grpc";
 
 package GrpcAuth;
+import "Protos/commonModels.proto";
 
 // The user service definition.
 service User {
   rpc GetUser (UserRequest) returns (UserReply);
-  rpc Activate(TokenModel) returns (UserActionReplay);
-  rpc Register(RegisterRequest) returns (UserActionReplay);
-  rpc Update(UpdateRequest) returns (UserActionReplay);
-  rpc ChangePassword(ChangePasswordRequest) returns (UserActionReplay);
+  rpc Activate(TokenModel) returns (CommonModels.ActionReplay);
+  rpc Register(RegisterRequest) returns (CommonModels.ActionReplay);
+  rpc Update(UpdateRequest) returns (CommonModels.ActionReplay);
+  rpc ChangePassword(ChangePasswordRequest) returns (CommonModels.ActionReplay);
   rpc Login(LoginRequest) returns (TokenModel);
 }
 
@@ -21,16 +22,6 @@ message UserRequest {
 message UserReply {
   string name = 1;
   int32 id = 2;
-}
-
-message ActionError{
-   string Code = 1;
-   string Description = 2;
-}
-
-message UserActionReplay{
-    bool success = 1;
-    repeated ActionError errors = 2;
 }
 
 message TokenModel{

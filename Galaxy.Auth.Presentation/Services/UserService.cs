@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Galaxy.Auth.Core.Interfaces.Services;
 using Galaxy.Auth.Core.Models;
 using Galaxy.Auth.Grpc;
+using Galaxy.Teams.Presentation;
 using Grpc.Core;
 using Microsoft.AspNetCore.Identity;
 using User = Galaxy.Auth.Grpc.User;
@@ -31,13 +32,13 @@ namespace Galaxy.Auth.Presentation.Services
             }; 
         }
 
-        public override async Task<UserActionReplay> Activate(TokenModel request, ServerCallContext context)
+        public override async Task<ActionReplay> Activate(TokenModel request, ServerCallContext context)
         {
             var errors = (await _userService.ActivateAsync(request.Token)).ToList();
             return GetResponse(errors);
         }
 
-        public override async Task<UserActionReplay> Update(UpdateRequest request, ServerCallContext context)
+        public override async Task<ActionReplay> Update(UpdateRequest request, ServerCallContext context)
         {
             var errors = await _userService.UpdateAsync(request.Username, request.Name, request.Phone);
             return GetResponse(errors);
@@ -53,7 +54,7 @@ namespace Galaxy.Auth.Presentation.Services
             };
         }
 
-        public override async Task<UserActionReplay> Register(RegisterRequest request, ServerCallContext context)
+        public override async Task<ActionReplay> Register(RegisterRequest request, ServerCallContext context)
         {
             var errors = await _userService.RegisterAsync(new RegisterModel
             {
@@ -64,16 +65,16 @@ namespace Galaxy.Auth.Presentation.Services
             return GetResponse(errors);
         }
 
-        public override async Task<UserActionReplay> ChangePassword(ChangePasswordRequest request, ServerCallContext context)
+        public override async Task<ActionReplay> ChangePassword(ChangePasswordRequest request, ServerCallContext context)
         {
             var errors = await _userService.ChangePasswordAsync(request.Username, request.NewPassword, request.OldPassword);
             return GetResponse(errors);
         }
 
-        private UserActionReplay GetResponse(IEnumerable<IdentityError> errors)
+        private ActionReplay GetResponse(IEnumerable<IdentityError> errors)
         {
             var identityErrors = errors.ToList();
-            var response = new UserActionReplay {Success = !identityErrors.Any()};
+            var response = new ActionReplay {Success = !identityErrors.Any()};
             
             identityErrors.ForEach(err =>
             {

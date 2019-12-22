@@ -6,7 +6,8 @@
 
   <ItemGroup>
     <Protobuf Include="Protos\permissions.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos\user.proto" GrpcServices="Server" />    
+    <Protobuf Include="Protos\user.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\commonModels.proto" GrpcServices="Server"/>    
   </ItemGroup>
 
   <ItemGroup>
