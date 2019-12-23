@@ -6,6 +6,7 @@
         AddPlanet,
         AddRobot,
         AddShuttle,
-        AddTeam
+        AddTeam,
+        AddExploration
     }
 }

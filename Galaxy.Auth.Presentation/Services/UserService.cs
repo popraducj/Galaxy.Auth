@@ -3,11 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Galaxy.Auth.Core.Interfaces.Services;
 using Galaxy.Auth.Core.Models;
-using Galaxy.Auth.Grpc;
-using Galaxy.Teams.Presentation;
+using Galaxy.Auth;
+using Galaxy.Teams;
 using Grpc.Core;
 using Microsoft.AspNetCore.Identity;
-using User = Galaxy.Auth.Grpc.User;
+using User = Galaxy.Auth.User;
 
 namespace Galaxy.Auth.Presentation.Services
 {

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Galaxy.Auth.Core.Enums;
 using Galaxy.Auth.Core.Models;
-using Galaxy.Auth.Core.UserManagerExtensions;
 using Galaxy.Auth.Infrastructure;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +23,7 @@ namespace Galaxy.Auth.Presentation.Ioc
 
         public static IServiceCollection AddAuthenticationRules(this IServiceCollection services)
         {
-            services.AddDefaultIdentity<User>(config =>
+            services.AddDefaultIdentity<Core.Models.User>(config =>
                 {
                     config.SignIn.RequireConfirmedEmail = true;
                     config.Lockout.AllowedForNewUsers = true;
@@ -56,7 +55,7 @@ namespace Galaxy.Auth.Presentation.Ioc
 
         private static async Task AddAdminUserAsync(IServiceProvider serviceProvider)
         {
-            var userManagement = serviceProvider.GetRequiredService<UserManager<User>>();
+            var userManagement = serviceProvider.GetRequiredService<UserManager<Core.Models.User>>();
 
             if (userManagement.Users.Count(p => p.Id == 1) > 0)
             {
@@ -65,7 +64,7 @@ namespace Galaxy.Auth.Presentation.Ioc
             }
 
             const string email = "admin@galaxy.com";
-            var user = new User
+            var user = new Core.Models.User
             {
                 Email = email,
                 EmailConfirmed = true,

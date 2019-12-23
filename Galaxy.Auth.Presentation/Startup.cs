@@ -6,6 +6,7 @@ using Galaxy.Auth.Core.Interfaces;
 using Galaxy.Auth.Core.Models.Settings;
 using Galaxy.Auth.Infrastructure;
 using Galaxy.Auth.Presentation.Ioc;
+using Galaxy.Auth.Presentation.Middleware;
 using Galaxy.Auth.Presentation.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Galaxy.Auth.Presentation
 {
@@ -45,13 +47,14 @@ namespace Galaxy.Auth.Presentation
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory logger)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            app.ConfigureExceptionHandler(logger.CreateLogger("Galaxy.Auth.GlobalLogger"));
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

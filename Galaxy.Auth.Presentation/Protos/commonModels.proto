@@ -1,6 +1,6 @@
 ﻿syntax = "proto3";
 
-option csharp_namespace = "Galaxy.Teams.Presentation";
+option csharp_namespace = "Galaxy.Teams";
 
 package CommonModels;
 

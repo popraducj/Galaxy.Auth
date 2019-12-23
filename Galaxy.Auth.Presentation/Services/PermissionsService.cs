@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Galaxy.Auth.Core.Enums;
 using Galaxy.Auth.Core.Interfaces.Services;
 using Galaxy.Auth.Core.Models;
-using Galaxy.Auth.Grpc;
+using Galaxy.Auth;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
 
