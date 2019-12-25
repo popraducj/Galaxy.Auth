@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaxy.Auth.Core", "Galaxy.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaxy.Auth.Core.Tests", "Galaxy.Auth.Core.Tests\Galaxy.Auth.Core.Tests.csproj", "{3802FB36-436E-4083-8AAB-A1EB35298D86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaxy.Auth.Infrastructure.Tests", "Galaxy.Auth.Infrastructure.Tests\Galaxy.Auth.Infrastructure.Tests.csproj", "{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Galaxy.Auth.Presentation", "Galaxy.Auth.Presentation\Galaxy.Auth.Presentation.csproj", "{6AA8E6F9-6BFF-463D-905A-18DA16A8D9D6}"
 EndProject
 Global
@@ -62,18 +60,6 @@ Global
 		{3802FB36-436E-4083-8AAB-A1EB35298D86}.Release|x64.Build.0 = Release|Any CPU
 		{3802FB36-436E-4083-8AAB-A1EB35298D86}.Release|x86.ActiveCfg = Release|Any CPU
 		{3802FB36-436E-4083-8AAB-A1EB35298D86}.Release|x86.Build.0 = Release|Any CPU
-		{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}.Debug|x64.Build.0 = Debug|Any CPU
-		{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}.Debug|x86.Build.0 = Debug|Any CPU
-		{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}.Release|x64.ActiveCfg = Release|Any CPU
-		{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}.Release|x64.Build.0 = Release|Any CPU
-		{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}.Release|x86.ActiveCfg = Release|Any CPU
-		{1CFB9B5A-E76A-4315-A6FA-0ED26738C3A9}.Release|x86.Build.0 = Release|Any CPU
 		{6AA8E6F9-6BFF-463D-905A-18DA16A8D9D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6AA8E6F9-6BFF-463D-905A-18DA16A8D9D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AA8E6F9-6BFF-463D-905A-18DA16A8D9D6}.Debug|x64.ActiveCfg = Debug|Any CPU

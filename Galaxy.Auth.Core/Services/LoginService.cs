@@ -50,27 +50,16 @@ namespace Galaxy.Auth.Core.Services
                 new Claim(JwtRegisteredClaimNames.Jti, user.UserName)
             };
 
-            var token = new JwtSecurityToken();
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.Jwt.Key));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(30);
             
-            try
-            {
-
-
-                token = new JwtSecurityToken(_appSettings.Jwt.Issuer,
-                    _appSettings.Jwt.Audience,
-                    claims,
-                    expires: expires,
-                    signingCredentials: credentials
-                );
-
-            }
-            catch (Exception ex)
-            {
-                var b = ex;
-            }
+            var token = new JwtSecurityToken(_appSettings.Jwt.Issuer,
+                _appSettings.Jwt.Audience,
+                claims,
+                expires: expires,
+                signingCredentials: credentials
+            );
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }

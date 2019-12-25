@@ -78,6 +78,9 @@ namespace Galaxy.Auth.Core.Services
                 _logger.LogWarning("invalid activation token was requested");
                 return ActionResponse.UnauthorizedAccess();
             }
+            
+            if(string.IsNullOrEmpty(decodedToken))
+                return ActionResponse.UnauthorizedAccess();
 
             var dbToken = await _invitationTokenRepository.GetAsync(decodedToken);
             if(dbToken == null) return ActionResponse.UnauthorizedAccess();
@@ -117,9 +120,9 @@ namespace Galaxy.Auth.Core.Services
         {
             var user = await _userManager.FindByNameAsync(username);
             
-            if (user == null || !user.EmailConfirmed) throw  new UnauthorizedAccessException();
+            if (user == null || !user.EmailConfirmed) return ActionResponse.UnauthorizedAccess();
             var signIn = await _signInManager.PasswordSignInAsync(username, oldPassword, false, false);
-            if (!signIn.Succeeded)  throw  new UnauthorizedAccessException();
+            if (!signIn.Succeeded)  return ActionResponse.UnauthorizedAccess();
             
             var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
             var result = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
@@ -131,8 +134,7 @@ namespace Galaxy.Auth.Core.Services
 
         public async Task<User> VerifyUserExistsAsync(string username)
         {
-            var user = await _userManager.FindByNameAsync(username);
-            return user;
+            return await _userManager.FindByNameAsync(username);
         }
         
         private ActionResponse ToActionResponse(IEnumerable<IdentityError> errors)
