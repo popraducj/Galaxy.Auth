@@ -2,11 +2,12 @@
 {
     public enum UserPermission
     {
-        AddCaptain,
-        AddPlanet,
-        AddRobot,
-        AddShuttle,
-        AddTeam,
-        AddExploration
+        Captain,
+        Planet,
+        Robot,
+        Shuttle,
+        Team,
+        Exploration,
+        Permissions
     }
 }

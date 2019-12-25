@@ -7,7 +7,7 @@
   <ItemGroup>
     <Protobuf Include="Protos\permissions.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\user.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos\commonModels.proto" GrpcServices="Server"/>    
+    <Protobuf Include="Protos\commonModels.proto" GrpcServices="Server" />    
   </ItemGroup>
 
   <ItemGroup>
@@ -20,4 +20,8 @@
     <PackageReference Include="NLog" Version="4.6.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="appsettings*.json" CopyToOutputDirectory="Always" />
+    <None Include="NLog*.config" CopyToOutputDirectory="Always" />
+  </ItemGroup>
 </Project>

@@ -6,8 +6,8 @@ namespace Galaxy.Auth.Core.Interfaces
 {
     public interface IUserPermissionRepository
     {
-        Task AddAsync(IEnumerable<Permission> permissions);
-        Task RemoveAsync(IEnumerable<Permission> permissions);
+        Task<ActionResponse> AddAsync(IEnumerable<Permission> permissions);
+        Task<ActionResponse> RemoveAsync(IEnumerable<Permission> permissions);
         Task<List<Permission>> GetByUserIdAsync(int userId);
     }
 }

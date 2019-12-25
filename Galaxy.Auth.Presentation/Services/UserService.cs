@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Galaxy.Auth.Core.Interfaces.Services;
 using Galaxy.Auth.Core.Models;
 using Galaxy.Auth;
+using Galaxy.Auth.Presentation.Helpers;
 using Galaxy.Teams;
 using Grpc.Core;
 using Microsoft.AspNetCore.Identity;
@@ -34,14 +35,14 @@ namespace Galaxy.Auth.Presentation.Services
 
         public override async Task<ActionReplay> Activate(TokenModel request, ServerCallContext context)
         {
-            var errors = (await _userService.ActivateAsync(request.Token)).ToList();
-            return GetResponse(errors);
+            var response = await _userService.ActivateAsync(request.Token);
+            return response.ToActionReplay();
         }
 
         public override async Task<ActionReplay> Update(UpdateRequest request, ServerCallContext context)
         {
-            var errors = await _userService.UpdateAsync(request.Username, request.Name, request.Phone);
-            return GetResponse(errors);
+            var response = await _userService.UpdateAsync(request.Username, request.Name, request.Phone);
+            return response.ToActionReplay();
         }
 
         public override async Task<TokenModel> Login(LoginRequest request, ServerCallContext context)
@@ -56,35 +57,19 @@ namespace Galaxy.Auth.Presentation.Services
 
         public override async Task<ActionReplay> Register(RegisterRequest request, ServerCallContext context)
         {
-            var errors = await _userService.RegisterAsync(new RegisterModel
+            var response = await _userService.RegisterAsync(new RegisterModel
             {
                 Email =  request.Email,
                 Name = request.Name,
                 Password = request.Password
             });
-            return GetResponse(errors);
+            return response.ToActionReplay();
         }
 
         public override async Task<ActionReplay> ChangePassword(ChangePasswordRequest request, ServerCallContext context)
         {
-            var errors = await _userService.ChangePasswordAsync(request.Username, request.NewPassword, request.OldPassword);
-            return GetResponse(errors);
-        }
-
-        private ActionReplay GetResponse(IEnumerable<IdentityError> errors)
-        {
-            var identityErrors = errors.ToList();
-            var response = new ActionReplay {Success = !identityErrors.Any()};
-            
-            identityErrors.ForEach(err =>
-            {
-                response.Errors.Add(new ActionError
-                {
-                    Code = err.Code,
-                    Description = err.Description
-                });
-            });
-            return response;
+            var response = await _userService.ChangePasswordAsync(request.Username, request.NewPassword, request.OldPassword);
+            return response.ToActionReplay();
         }
     }
 }

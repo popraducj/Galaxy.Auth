@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Galaxy.Auth.Core.Helpers;
 using Galaxy.Auth.Core.Interfaces;
@@ -34,7 +35,7 @@ namespace Galaxy.Auth.Core.Services
             _signInManager = signInManager;
             _appSettings = appSettings.Value;
         }
-        public async Task<IEnumerable<IdentityError>> RegisterAsync(RegisterModel model)
+        public async Task<ActionResponse> RegisterAsync(RegisterModel model)
         {
             var user = new User
             {
@@ -47,7 +48,7 @@ namespace Galaxy.Auth.Core.Services
             if (!savedUser.Succeeded)
             {
                 _logger.LogCritical($"User creation failed {JsonConvert.SerializeObject(savedUser.Errors)}");
-                return savedUser.Errors;
+                return ToActionResponse(savedUser.Errors);
             }
 
             var token = new InvitationToken
@@ -61,10 +62,10 @@ namespace Galaxy.Auth.Core.Services
                                                 $"account please click here: https://localhost:5003/user/activate?activationToken={_urlEncoder.Encode(token.Token)}" +
                                                 $"<br/> <br/>Thank you, <br/>Galaxy team",
                 "Please activate your account");
-            return new List<IdentityError>();
+            return new ActionResponse();
         }
 
-        public async Task<IEnumerable<IdentityError>> ActivateAsync(string token)
+        public async Task<ActionResponse> ActivateAsync(string token)
         {
             await Task.CompletedTask;
             string decodedToken;
@@ -75,14 +76,14 @@ namespace Galaxy.Auth.Core.Services
             catch
             {
                 _logger.LogWarning("invalid activation token was requested");
-                throw new UnauthorizedAccessException();
+                return ActionResponse.UnauthorizedAccess();
             }
 
             var dbToken = await _invitationTokenRepository.GetAsync(decodedToken);
-            if(dbToken == null) throw new UnauthorizedAccessException();
+            if(dbToken == null) return ActionResponse.UnauthorizedAccess();
 
             var user = await _userManager.FindByEmailAsync(dbToken.Email);
-            if(user == null) throw new UnauthorizedAccessException();
+            if(user == null) return ActionResponse.UnauthorizedAccess();
             
             // activate user
             var emailConfirmToken = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -91,28 +92,28 @@ namespace Galaxy.Auth.Core.Services
             if (!result.Succeeded)
             {
                 _logger.LogCritical($"User activation failed: {result.Errors}");
-                return result.Errors;
+                return ToActionResponse(result.Errors);
             }
 
             await _invitationTokenRepository.RemoveAsync(dbToken);
-            return new List<IdentityError>();
+            return new ActionResponse();
         }
 
-        public async Task<IEnumerable<IdentityError>> UpdateAsync(string username, string name, string phone)
+        public async Task<ActionResponse> UpdateAsync(string username, string name, string phone)
         {
             var user = await _userManager.FindByNameAsync(username);
-            if (user == null) throw new UnauthorizedAccessException();
+            if (user == null) return ActionResponse.UnauthorizedAccess();
             user.Name =  string.IsNullOrEmpty(name)? user.Name: name;
             user.PhoneNumber = phone;
 
             var result = await _userManager.UpdateAsync(user);
             
-            if (result.Succeeded) return new List<IdentityError>();
+            if (result.Succeeded) return new ActionResponse();
             _logger.LogError($"Failed to update user:{username} with errors: {JsonConvert.SerializeObject(result.Errors)}");
-            return result.Errors;
+            return ToActionResponse(result.Errors);
         }
 
-        public async Task<IEnumerable<IdentityError>> ChangePasswordAsync(string username, string newPassword, string oldPassword)
+        public async Task<ActionResponse> ChangePasswordAsync(string username, string newPassword, string oldPassword)
         {
             var user = await _userManager.FindByNameAsync(username);
             
@@ -122,16 +123,32 @@ namespace Galaxy.Auth.Core.Services
             
             var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
             var result = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
-            if (result.Succeeded) return new List<IdentityError>();
+            if (result.Succeeded) return new ActionResponse();
             _logger.LogCritical(
                 $"Change password failed for user: {username}. Errors: {JsonConvert.SerializeObject(result.Errors)}");
-            return result.Errors;
+            return ToActionResponse(result.Errors);
         }
 
         public async Task<User> VerifyUserExistsAsync(string username)
         {
             var user = await _userManager.FindByNameAsync(username);
             return user;
+        }
+        
+        private ActionResponse ToActionResponse(IEnumerable<IdentityError> errors)
+        {
+            var identityErrors = errors.ToList();
+            var response = new ActionResponse {Success = !identityErrors.Any()};
+            
+            identityErrors.ForEach(err =>
+            {
+                response.Errors.Add(new ActionError
+                {
+                    Code = err.Code,
+                    Description = err.Description
+                });
+            });
+            return response;
         }
     }
 }

@@ -3,11 +3,12 @@
 option csharp_namespace = "Galaxy.Auth";
 
 package GrpcAuth;
+import "Protos/commonModels.proto";
 
 // The permissions service definition.
 service Permissions {
-  rpc AddPermission (stream PermissionRequest) returns (PermissionReply);
-  rpc RemovePermission (stream PermissionRequest) returns (PermissionReply);
+  rpc AddPermission (stream PermissionRequest) returns (CommonModels.ActionReplay);
+  rpc RemovePermission (stream PermissionRequest) returns (CommonModels.ActionReplay);
   rpc GetPermissions (UserPermissionRequest) returns (stream UserPermissionReplay);
 }
 
@@ -17,10 +18,6 @@ message PermissionRequest {
   int32 permission =2;
 }
 
-// The response message containing the greetings.
-message PermissionReply {
-  bool success = 1;
-}
 // the request for getting user's permissions
 message UserPermissionRequest{
    int32 id =1;

@@ -14,14 +14,14 @@ namespace Galaxy.Auth.Core.Services
         {
             _repository = repository;
         }
-        public async Task AddPermissions(List<Permission> permissions)
+        public async Task<ActionResponse> AddPermissions(List<Permission> permissions)
         {
-            await _repository.AddAsync(permissions);
+            return await _repository.AddAsync(permissions);
         }
 
-        public async Task RemovePermissions(List<Permission> permissions)
+        public async Task<ActionResponse> RemovePermissions(List<Permission> permissions)
         {
-            await _repository.RemoveAsync(permissions);
+            return await _repository.RemoveAsync(permissions);
         }
 
         public Task<List<Permission>> GetByUserIdAsync(int userId)

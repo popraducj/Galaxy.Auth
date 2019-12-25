@@ -6,8 +6,8 @@ namespace Galaxy.Auth.Core.Interfaces.Services
 {
     public interface IPermissionsService
     {
-        Task AddPermissions(List<Permission> permissions);
-        Task RemovePermissions(List<Permission> permissions);
+        Task<ActionResponse> AddPermissions(List<Permission> permissions);
+        Task<ActionResponse> RemovePermissions(List<Permission> permissions);
 
         Task<List<Permission>> GetByUserIdAsync(int userId);
     }

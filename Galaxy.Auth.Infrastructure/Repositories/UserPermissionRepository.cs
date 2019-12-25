@@ -15,16 +15,32 @@ namespace Galaxy.Auth.Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task AddAsync(IEnumerable<Permission> permissions)
+        public async Task<ActionResponse> AddAsync(IEnumerable<Permission> permissions)
         {
-            await _dbContext.Permissions.AddRangeAsync(permissions);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                await _dbContext.Permissions.AddRangeAsync(permissions);
+                await _dbContext.SaveChangesAsync();
+                return new ActionResponse();
+            }
+            catch
+            {
+                return ActionResponse.FailedToAdd();
+            }
         }
 
-        public async Task RemoveAsync(IEnumerable<Permission> permissions)
+        public async Task<ActionResponse> RemoveAsync(IEnumerable<Permission> permissions)
         {
-            _dbContext.Permissions.RemoveRange(permissions);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                _dbContext.Permissions.RemoveRange(permissions);
+                await _dbContext.SaveChangesAsync();
+                return new ActionResponse();
+            }
+            catch
+            {
+                return ActionResponse.FailedToAdd();
+            }
         }
 
         public Task<List<Permission>> GetByUserIdAsync(int userId)
