@@ -29,7 +29,7 @@ namespace Galaxy.Auth.Presentation.Services
             return new UserReply
             {
                 Id = dbUser?.Id ?? 0,
-                Name = dbUser?.Name
+                Name = dbUser?.Name ?? string.Empty
             }; 
         }
 
